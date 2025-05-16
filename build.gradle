@@ -1,0 +1,104 @@
+plugins {
+    id 'java'
+    id 'application'
+}
+
+group = 'org.example'
+version = '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    // XML processing
+    implementation 'com.fasterxml.jackson.dataformat:jackson-dataformat-xml:2.15.2'
+    implementation 'org.w3c:dom:2.3.0-jaxb-1.0.6'
+    
+    // Logging
+    implementation 'org.slf4j:slf4j-api:1.7.36'
+    implementation 'ch.qos.logback:logback-classic:1.2.11'
+    implementation 'ch.qos.logback:logback-core:1.2.11'
+    
+    // Testing
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.9.2'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.9.2'
+}
+
+application {
+    mainClass = 'server.Main'
+}
+
+test {
+    useJUnitPlatform()
+}
+
+// Create separate tasks for client and server
+task runServer(type: JavaExec) {
+    group = 'application'
+    description = 'Run the server application'
+    mainClass = 'server.Main'
+    classpath = sourceSets.main.runtimeClasspath
+    jvmArgs = ['-Xmx512m', '-Xms256m']
+}
+
+task runClient(type: JavaExec) {
+    group = 'application'
+    description = 'Run the client application'
+    mainClass = 'client.Main'
+    classpath = sourceSets.main.runtimeClasspath
+    jvmArgs = ['-Xmx512m', '-Xms256m']
+    standardInput = System.in
+    standardOutput = System.out
+    errorOutput = System.err
+}
+
+// Configure source sets
+sourceSets {
+    main {
+        java {
+            srcDirs = ['src']
+        }
+        resources {
+            srcDirs = ['src/resources']
+        }
+    }
+    test {
+        java {
+            srcDirs = ['test']
+        }
+    }
+}
+
+// Configure Java compilation
+java {
+    sourceCompatibility = JavaVersion.VERSION_11
+    targetCompatibility = JavaVersion.VERSION_11
+}
+
+// Create JAR files for client and server
+task clientJar(type: Jar) {
+    group = 'build'
+    description = 'Create a JAR file for the client application'
+    archiveBaseName = 'client'
+    manifest {
+        attributes 'Main-Class': 'client.Main'
+    }
+    from sourceSets.main.output
+    include 'client/**'
+    include 'common/**'
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+}
+
+task serverJar(type: Jar) {
+    group = 'build'
+    description = 'Create a JAR file for the server application'
+    archiveBaseName = 'server'
+    manifest {
+        attributes 'Main-Class': 'server.Main'
+    }
+    from sourceSets.main.output
+    include 'server/**'
+    include 'common/**'
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+} 

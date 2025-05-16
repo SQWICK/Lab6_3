@@ -1,0 +1,7 @@
+help
+info
+show
+add
+execute_script test.txt
+execute_script test.txt
+history
