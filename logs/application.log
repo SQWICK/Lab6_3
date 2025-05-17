@@ -1,32 +1,6 @@
-2025-05-16 18:01:37.549 [main] INFO  server.Server - Server started on port 5000
-2025-05-16 18:01:50.640 [main] INFO  client.Main - Connecting to server localhost:5000
-2025-05-16 18:01:50.652 [main] INFO  client.Client - Connected to server localhost:5000
-2025-05-16 18:05:21.949 [main] ERROR server.Server - Server error: Address already in use: bind
-java.net.BindException: Address already in use: bind
-	at java.base/sun.nio.ch.Net.bind0(Native Method)
-	at java.base/sun.nio.ch.Net.bind(Net.java:565)
-	at java.base/sun.nio.ch.DatagramChannelImpl.bindInternal(DatagramChannelImpl.java:1347)
-	at java.base/sun.nio.ch.DatagramChannelImpl.bind(DatagramChannelImpl.java:1317)
-	at java.base/sun.nio.ch.DatagramSocketAdaptor.bind(DatagramSocketAdaptor.java:108)
-	at java.base/java.net.DatagramSocket.createDelegate(DatagramSocket.java:1433)
-	at java.base/java.net.DatagramSocket.<init>(DatagramSocket.java:328)
-	at java.base/java.net.DatagramSocket.<init>(DatagramSocket.java:387)
-	at java.base/java.net.DatagramSocket.<init>(DatagramSocket.java:353)
-	at server.Server.start(Server.java:37)
-	at server.Main.main(Main.java:34)
-2025-05-16 18:05:21.952 [main] INFO  server.Server - Server stopped
-2025-05-16 18:05:21.952 [Thread-0] INFO  server.Server - Server stopped
-2025-05-16 18:06:03.113 [main] INFO  server.Server - Server started on port 5000
-2025-05-16 18:06:16.401 [main] INFO  client.Main - Connecting to server localhost:5000
-2025-05-16 18:06:16.418 [main] INFO  client.Client - Connected to server localhost:5000
-2025-05-16 18:17:07.253 [main] INFO  server.Server - Server started on port 5000
-2025-05-16 18:17:20.797 [main] INFO  client.Main - Connecting to server localhost:5000
-2025-05-16 18:17:20.807 [main] INFO  client.Client - Connected to server localhost:5000
-2025-05-16 18:49:37.513 [main] INFO  server.Server - Server started on port 5000
-2025-05-16 18:49:50.282 [main] INFO  client.Main - Connecting to server localhost:5000
-2025-05-16 18:49:50.294 [main] INFO  client.Client - Connected to server localhost:5000
-2025-05-16 18:51:39.204 [Thread-0] INFO  client.Main - Shutting down client...
-2025-05-16 18:51:39.204 [Thread-0] INFO  client.Client - Disconnected from server
-2025-05-16 18:52:39.451 [main] INFO  server.Server - Server started on port 5000
-2025-05-16 18:52:51.713 [main] INFO  client.Main - Connecting to server localhost:5000
-2025-05-16 18:52:51.725 [main] INFO  client.Client - Connected to server localhost:5000
+2025-05-17 09:28:25.834 [main] INFO  server.Server - Server started on port 5000
+2025-05-17 09:28:56.447 [main] INFO  client.Main - Connecting to server localhost:5000
+2025-05-17 09:28:56.459 [main] INFO  client.Client - Connected to server localhost:5000
+2025-05-17 09:49:03.336 [main] INFO  server.Server - Server started on port 5000
+2025-05-17 09:49:14.973 [main] INFO  client.Main - Connecting to server localhost:5000
+2025-05-17 09:49:14.985 [main] INFO  client.Client - Connected to server localhost:5000

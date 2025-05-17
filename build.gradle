@@ -76,29 +76,91 @@ java {
     targetCompatibility = JavaVersion.VERSION_11
 }
 
-// Create JAR files for client and server
+// Create JAR files for client and server with dependencies
 task clientJar(type: Jar) {
     group = 'build'
-    description = 'Create a JAR file for the client application'
+    description = 'Create a JAR file for the client application with dependencies'
     archiveBaseName = 'client'
+    archiveVersion = '1.0-SNAPSHOT'
     manifest {
         attributes 'Main-Class': 'client.Main'
     }
+    
+    // Include all dependencies
+    from {
+        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+    
+    // Include project classes
     from sourceSets.main.output
-    include 'client/**'
-    include 'common/**'
+    
+    // Include resources
+    from('src/resources') {
+        into 'resources'
+    }
+    
+    // Exclude duplicate files
     duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+    
+    // Exclude signature files
+    exclude 'META-INF/*.SF'
+    exclude 'META-INF/*.DSA'
+    exclude 'META-INF/*.RSA'
 }
 
 task serverJar(type: Jar) {
     group = 'build'
-    description = 'Create a JAR file for the server application'
+    description = 'Create a JAR file for the server application with dependencies'
     archiveBaseName = 'server'
+    archiveVersion = '1.0-SNAPSHOT'
     manifest {
         attributes 'Main-Class': 'server.Main'
     }
+    
+    // Include all dependencies
+    from {
+        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+    
+    // Include project classes
     from sourceSets.main.output
-    include 'server/**'
-    include 'common/**'
+    
+    // Include resources
+    from('src/resources') {
+        into 'resources'
+    }
+    
+    // Exclude duplicate files
     duplicatesStrategy = DuplicatesStrategy.EXCLUDE
-} 
+    
+    // Exclude signature files
+    exclude 'META-INF/*.SF'
+    exclude 'META-INF/*.DSA'
+    exclude 'META-INF/*.RSA'
+}
+
+// Create distribution task
+task createDistribution(type: Copy) {
+    group = 'build'
+    description = 'Create a distribution with client and server JARs'
+    
+    dependsOn clientJar, serverJar
+    
+    // Clean the dist directory first
+    doFirst {
+        delete fileTree(dir: 'dist')
+    }
+    
+    from('build/libs') {
+        include 'client-*.jar'
+        include 'server-*.jar'
+    }
+    from('src/resources') {
+        include '*.properties'
+        include '*.xml'
+    }
+    into 'dist'
+}
+
+// Make build task depend on distribution
+build.dependsOn createDistribution 

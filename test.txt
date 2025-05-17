@@ -2,6 +2,13 @@ help
 info
 show
 add
+1
+1
+1
+1
+n
+2
+n
 execute_script test.txt
 execute_script test.txt
 history

@@ -5,7 +5,8 @@ public enum Position {
     HEAD_OF_DIVISION,
     BAKER,
     COOK,
-    MANAGER_OF_CLEANING;
+    MANAGER_OF_CLEANING,
+    WORKER_OF_YEAR;
 
     public static String names() {
         StringBuilder positionList = new StringBuilder();

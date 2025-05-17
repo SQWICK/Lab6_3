@@ -43,23 +43,23 @@ public class Server {
                 DatagramPacket receivePacket = new DatagramPacket(receiveBuffer, receiveBuffer.length);
                 socket.receive(receivePacket);
 
-                // Deserialize request
+
                 ByteArrayInputStream bais = new ByteArrayInputStream(receivePacket.getData());
                 ObjectInputStream ois = new ObjectInputStream(bais);
                 Request request = (Request) ois.readObject();
 
                 logger.debug("Received request: {}", request.getCommandName());
 
-                // Process request
+
                 Response response = commandManager.executeCommand(request.getCommandName(), request.getArgs(), request.getData());
 
-                // Serialize response
+
                 ByteArrayOutputStream baos = new ByteArrayOutputStream();
                 ObjectOutputStream oos = new ObjectOutputStream(baos);
                 oos.writeObject(response);
                 byte[] sendBuffer = baos.toByteArray();
 
-                // Send response
+
                 InetAddress clientAddress = receivePacket.getAddress();
                 int clientPort = receivePacket.getPort();
                 DatagramPacket sendPacket = new DatagramPacket(sendBuffer, sendBuffer.length, clientAddress, clientPort);

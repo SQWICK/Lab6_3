@@ -39,37 +39,31 @@ public class Client {
     }
 
     public Response sendRequest(Request request) throws Exception {
-        logger.debug("=== Client Debug Info ===");
         logger.debug("Sending request: {}", request.getCommandName());
         logger.debug("Request data class: {}", request.getData() != null ? request.getData().getClass().getName() : "null");
         if (request.getData() != null) {
             logger.debug("Request data: {}", request.getData());
         }
 
-        // Serialize request
+
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         ObjectOutputStream oos = new ObjectOutputStream(baos);
         oos.writeObject(request);
         byte[] sendBuffer = baos.toByteArray();
-        logger.debug("Request serialized, size: {} bytes", sendBuffer.length);
 
-        // Send request
+
         DatagramPacket sendPacket = new DatagramPacket(sendBuffer, sendBuffer.length, address, port);
         socket.send(sendPacket);
-        logger.debug("Request sent to server");
 
-        // Receive response
+
         byte[] receiveBuffer = new byte[Config.getIntProperty("client.buffer.size")];
         DatagramPacket receivePacket = new DatagramPacket(receiveBuffer, receiveBuffer.length);
         socket.receive(receivePacket);
-        logger.debug("Response received from server");
 
-        // Deserialize response
+
         ByteArrayInputStream bais = new ByteArrayInputStream(receivePacket.getData());
         ObjectInputStream ois = new ObjectInputStream(bais);
         Response response = (Response) ois.readObject();
-        logger.debug("Response deserialized: {}", response);
-        logger.debug("===========================");
 
         return response;
     }
